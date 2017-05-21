@@ -6,7 +6,7 @@ from ..exceptions import AttributeNotProvided
 from ..utils import SerializableAttributesHolder
 
 if sys.version_info[0] >= 3:
-    basestring = str
+    str = str
 
 class TraceItem(SerializableAttributesHolder):
     """Represents a trace item.
@@ -21,7 +21,7 @@ class TraceItem(SerializableAttributesHolder):
         missing_attributes = {'module', 'tree', 'measures'} - set(attributes.keys())
         if missing_attributes:
             raise AttributeNotProvided('Missing attributes: %s' % ', '.join(missing_attributes))
-        if not isinstance(attributes['module'], basestring):
+        if not isinstance(attributes['module'], str):
             raise TypeError('"module" attribute is not a string.')
         if not isinstance(attributes['tree'], AbstractNode):
             raise TypeError('"tree" attribute is not an AbstractNode.')

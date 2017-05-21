@@ -41,7 +41,7 @@ class AbstractNode(SerializableTypedAttributesHolder):
     def fold(self, predicate):
         """Takes a predicate and applies it to each node starting from the
         leaves and making the return value propagate."""
-        childs = {x:y.fold(predicate) for (x,y) in self._attributes.items()
+        childs = {x:y.fold(predicate) for (x,y) in list(self._attributes.items())
                   if isinstance(y, SerializableTypedAttributesHolder)}
         return predicate(self, childs)
 
@@ -52,6 +52,6 @@ class AbstractNode(SerializableTypedAttributesHolder):
             else:
                 return tree
         arguments = {x: wrapper(y)
-                     for (x, y) in self._attributes.items()
+                     for (x, y) in list(self._attributes.items())
                      if x != 'type'}
         return predicate(self.__class__(**arguments))

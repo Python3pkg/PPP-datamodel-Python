@@ -16,7 +16,7 @@ class Triple(AbstractNode):
         attributes['inverse_predicate'] = \
                 attributes.get('inverse_predicate', List([]))
         super(Triple, self)._check_attributes(attributes)
-        if not all(isinstance(x, AbstractNode) for x in attributes.values()):
+        if not all(isinstance(x, AbstractNode) for x in list(attributes.values())):
             raise TypeError('One of Triple\'s constructor argument '
                             'is not an AbstractNode instance.')
 

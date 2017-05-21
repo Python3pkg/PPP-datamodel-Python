@@ -7,7 +7,7 @@ from ..exceptions import AttributeNotProvided
 from ..utils import SerializableAttributesHolder
 
 if sys.version_info[0] >= 3:
-    basestring = str
+    str = str
 
 class Response(SerializableAttributesHolder):
     """Represents a response.
@@ -22,7 +22,7 @@ class Response(SerializableAttributesHolder):
         missing_attributes = {'language', 'tree', 'measures', 'trace'} - set(attributes.keys())
         if missing_attributes:
             raise AttributeNotProvided('Missing attributes: %s' % ', '.join(missing_attributes))
-        if not isinstance(attributes['language'], basestring):
+        if not isinstance(attributes['language'], str):
             raise TypeError('"language" attribute is not a string.')
         if not isinstance(attributes['tree'], AbstractNode):
             raise TypeError('"tree" attribute is not an AbstractNode.')

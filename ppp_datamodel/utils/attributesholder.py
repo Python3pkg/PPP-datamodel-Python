@@ -6,7 +6,7 @@ class AttributesHolder(object):
     __slots__ = ('_attributes')
     _possible_attributes = None
     def __init__(self, *args, **attributes):
-        attributes.update(dict(zip(self._possible_attributes, args)))
+        attributes.update(dict(list(zip(self._possible_attributes, args))))
         self._check_attributes(attributes)
         self._parse_attributes(attributes)
 
@@ -21,7 +21,7 @@ class AttributesHolder(object):
 
     def __repr__(self):
         return '<%s %r>' % (self.__class__.__name__,
-                {x:y for (x,y) in self._attributes.items()})
+                {x:y for (x,y) in list(self._attributes.items())})
 
     def _parse_attributes(self, attributes):
         self._attributes = attributes
@@ -36,7 +36,7 @@ class AttributesHolder(object):
         return not (self == other)
 
     def __hash__(self):
-        return hash(frozenset(self._attributes.items()))
+        return hash(frozenset(list(self._attributes.items())))
 
     def get(self, name, strict=True):
         """Get an attribute of the holder (read-only access)."""

@@ -25,7 +25,7 @@ class TypedAttributesHolder(AttributesHolder):
 
     def __repr__(self):
         return '<PPP node "%s" %r>' % (self.type,
-                {x:y for (x,y) in self._attributes.items() if x != 'type'})
+                {x:y for (x,y) in list(self._attributes.items()) if x != 'type'})
 
     def __eq__(self, other):
         """Tests equality with another AttributesHolder instance."""
@@ -38,5 +38,5 @@ class TypedAttributesHolder(AttributesHolder):
             return NotImplemented
 
     def __hash__(self):
-        return hash(frozenset(self._attributes.items()))
+        return hash(frozenset(list(self._attributes.items())))
 

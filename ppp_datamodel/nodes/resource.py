@@ -9,7 +9,7 @@ __all__ = ['Resource', 'StringResource', 'MathLatexResource',
            'JsonldResource']
 
 if sys.version_info[0] >= 3:
-    basestring = str
+    str = str
 
 EXTRA_ATTRIBUTES = {
         'string': ('language',),
@@ -44,7 +44,7 @@ class Resource(AbstractNode):
 
     def _check_attributes(self, attributes):
         super(Resource, self)._check_attributes(attributes)
-        if not isinstance(attributes['value'], basestring):
+        if not isinstance(attributes['value'], str):
             raise TypeError('%s\'s value must be a string, not %r.' %
                     (self.__class__.__name__, attributes['value']))
 
@@ -112,7 +112,7 @@ class TimeResource(Resource):
 
 def freeze_dicts(d):
     if isinstance(d, dict):
-        return frozenset(map(lambda x:(x[0], freeze_dicts(x[1])), d.items()))
+        return frozenset([(x[0], freeze_dicts(x[1])) for x in list(d.items())])
     elif isinstance(d, list):
         return tuple(map(freeze_dicts, d))
     else:

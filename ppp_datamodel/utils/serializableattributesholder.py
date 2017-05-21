@@ -13,10 +13,10 @@ class SerializableAttributesHolder(AttributesHolder):
             elif isinstance(v, list):
                 return [conv(x) for x in v]
             elif isinstance(v, dict):
-                return {x:conv(y) for (x,y) in v.items()}
+                return {x:conv(y) for (x,y) in list(v.items())}
             else:
                 return v
-        return {k.replace('_', '-'): conv(v) for (k, v) in self._attributes.items()}
+        return {k.replace('_', '-'): conv(v) for (k, v) in list(self._attributes.items())}
     def as_json(self):
         """Return a JSON dump of the object."""
         return json.dumps(self.as_dict())
@@ -48,7 +48,7 @@ class SerializableAttributesHolder(AttributesHolder):
             cls = cls2
         conv = (lambda k,v: cls.deserialize_attribute(k, v)
                             if isinstance(v, dict) else v)
-        data = {k.replace('-', '_'): conv(k,v) for (k, v) in data.items()}
+        data = {k.replace('-', '_'): conv(k,v) for (k, v) in list(data.items())}
         return cls(**data)
 
     @classmethod
